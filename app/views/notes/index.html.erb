@@ -1,8 +1,9 @@
 <div class="container bg-light pt-3 mt-5 mb-5 rounded">
-  <a class="btn btn-light mb-2" data-bs-toggle="offcanvas" href="#offcanvasNotes" role="button" aria-controls="offcanvasNotes">
-    <h1 class="p-4">My Notes</h1>
-  </a>
-
+  <div class="text-center">
+    <a class="btn btn-light mb-2" data-bs-toggle="offcanvas" href="#offcanvasNotes" role="button" aria-controls="offcanvasNotes">
+      <h1 class="display-4"><i class="fa fa-bars" aria-hidden="true"></i> My Notes</h1>
+    </a>
+  </div>
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNotes" aria-labelledby="offcanvasNotesLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasNotesLabel">My Notes</h5>
@@ -22,13 +23,13 @@
     </div>
   </div>
 
-  <div class="row mb-1 ps-3 pe-3">
+  <div class="row mb-1 ps-1 pe-1">
     <div class="col-6">
-      <button class="btn btn-primary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew" aria-expanded="false" aria-controls="collapseNew">
-        New note
+      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew" aria-expanded="false" aria-controls="collapseNew">
+        <i class="fa fa-plus-square" title="Add Note"></i><span> Add Note</span>
       </button>
     </div>
-    <div class="col-6 text-end p-1">
+    <div class="col-6 text-end">
       <%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-secondary p-1 mb-1' %>
     </div>
   </div>
