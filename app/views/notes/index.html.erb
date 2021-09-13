@@ -1,5 +1,26 @@
-<div class="container bg-light pt-3 mt-3">
-  <h1 class="p-4">Your Notes</h1>
+<div class="container bg-light pt-3 mt-5 mb-5 rounded">
+  <a class="btn btn-light mb-2" data-bs-toggle="offcanvas" href="#offcanvasNotes" role="button" aria-controls="offcanvasNotes">
+    <h1 class="p-4">My Notes</h1>
+  </a>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNotes" aria-labelledby="offcanvasNotesLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNotesLabel">My Notes</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-group">
+        <% @notes.each_with_index do |note, index| %>
+          <li class="list-group-item">
+            <a class="row text-dark text-decoration-none" href="<%= "#list-group#{index}" %>">
+              <div class="col-12 text-truncate"><%= note.title %></div>
+              <div class="col-12 text-truncate"><%= note.body %></div>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 
   <div class="row mb-1 ps-3 pe-3">
     <div class="col-6">
@@ -17,9 +38,9 @@
     </div>
   </div>
 
-  <ol class="list-group pb-5">
+  <ul class="list-group pb-5">
     <% @notes.each_with_index do |note, index| %>
-      <li class="list-group-item">
+      <li class="list-group-item" id="<%= "list-group#{index}" %>">
         <div class="row mb-1 p-2">
           <div class="col-8 overflow-hidden position-relative">
               <div id="<%= "collapseEditHide#{index}" %>">
@@ -46,5 +67,5 @@
         </div>
       </li>
     <% end %>
-  </ol>
+  </ul>
 </div>
