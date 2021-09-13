@@ -3,7 +3,7 @@
 
   <div class="row mb-1 ps-3 pe-3">
     <div class="col-6">
-      <button class="btn btn-primary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      <button class="btn btn-primary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew" aria-expanded="false" aria-controls="collapseNew">
         New note
       </button>
     </div>
@@ -12,26 +12,35 @@
     </div>
   </div>
   <div class="row">
-    <div class="collapse mb-3" id="collapseExample">
+    <div class="collapse mb-3" id="collapseNew">
       <%= render "form", note: @note %>
     </div>
   </div>
 
   <ol class="list-group pb-5">
-    <% @notes.each do |note| %>
+    <% @notes.each_with_index do |note, index| %>
       <li class="list-group-item">
-        <div class="row mb-1">
+        <div class="row mb-1 p-2">
           <div class="col-8 overflow-hidden position-relative">
-            <%= "#{note.title} (created by #{note.user.email}, #{note.created_at.day})" %><br />
-            <%= note.body %>
+              <div id="<%= "collapseEditHide#{index}" %>">
+                <div class="row">              
+                  <%= "#{note.title} (created by #{note.user.email}, #{note.created_at.day})" %><br />
+                </div>
+                <div class="row">
+                  <%= note.body %>
+                </div>
+              </div>
           </div>
           <div class="col-4 text-end">
-            <%= link_to 'Edit', "#", class: 'btn btn-primary p-1' %>
+            <button class="btn btn-primary p-1 make-editable" type="button" data-bs-toggle="collapse" data-bs-target="<%= "#collapseEdit#{index}" %>" aria-expanded="false" aria-controls="<%= "collapseEdit#{index}" %>" index="<%= "#{index}" %>">
+              Edit
+            </button>
             <%= link_to 'Del', note, method: :delete, class: 'btn btn-danger p-1', data: { confirm: 'Are you sure?' } %>
           </div>
         </div>
+        
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 collapse collapseEdit" id="<%= "collapseEdit#{index}" %>">
             <%= render "form", note: note %>
           </div>
         </div>
