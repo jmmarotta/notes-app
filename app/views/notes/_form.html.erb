@@ -1,0 +1,14 @@
+
+<%= simple_form_for(note) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs pb-1">
+    <%= f.input :title, label: false, input_html: { placeholder: 'Note Title' } %>
+    <%= f.input :body, label: false, input_html: { style: 'margin-top:-1px', placeholder: 'Note Body' } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: "btn btn-primary" %>
+  </div>
+<% end %>

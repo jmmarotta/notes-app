@@ -1,0 +1,41 @@
+<div class="container bg-light pt-3 mt-3">
+  <h1 class="p-4">Your Notes</h1>
+
+  <div class="row mb-1 ps-3 pe-3">
+    <div class="col-6">
+      <button class="btn btn-primary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        New note
+      </button>
+    </div>
+    <div class="col-6 text-end p-1">
+      <%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-secondary p-1 mb-1' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="collapse mb-3" id="collapseExample">
+      <%= render "form", note: @note %>
+    </div>
+  </div>
+
+  <ol class="list-group pb-5">
+    <% @notes.each do |note| %>
+      <li class="list-group-item">
+        <div class="row mb-1">
+          <div class="col-8 overflow-hidden position-relative">
+            <%= "#{note.title} (created by #{note.user.email}, #{note.created_at.day})" %><br />
+            <%= note.body %>
+          </div>
+          <div class="col-4 text-end">
+            <%= link_to 'Edit', "#", class: 'btn btn-primary p-1' %>
+            <%= link_to 'Del', note, method: :delete, class: 'btn btn-danger p-1', data: { confirm: 'Are you sure?' } %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <%= render "form", note: note %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+</div>
