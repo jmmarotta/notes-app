@@ -49,8 +49,38 @@
             <div class="col-12 text-end">
               <a class="fas fa-edit p-1 make-editable text-decoration-none" role="button" data-bs-toggle="collapse" href="<%= "#collapseEdit#{index}" %>" aria-expanded="false" aria-controls="<%= "collapseEdit#{index}" %>" index="<%= "#{index}" %>"></a>
               <%= link_to '', note, method: :delete, class: 'fas fa-trash p-1 text-decoration-none', data: { confirm: 'Warning: The note will be deleted?' } %>
+              <a role="button" class="" data-bs-toggle="modal" data-bs-target="#modalSend">
+                <i class="far fa-paper-plane"></i>
+              </a>
             </div>
           </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modalSend" tabindex="-1" aria-labelledby="modalSendLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalSendLabel">Send Note</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <%= simple_form_for :share, url: send_email_note_path(note), method: "GET" do |f| %>
+                    <%= f.label :to_email, 'Send To:' %>
+                    <%= f.input :to_email,
+                                label: false,
+                                required: true,
+                                autofocus: true,
+                                input_html: { autocomplete: "email", placeholder: "example@gmail.com" } %>
+                    <%= f.submit "Share", class: "btn btn-primary mt-1" %>
+                  <% end %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row mb-1">
             <div class="col-12">
                 <div id="<%= "collapseEditHide#{index}" %>">

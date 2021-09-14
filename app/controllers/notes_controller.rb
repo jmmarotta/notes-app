@@ -1,12 +1,12 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: %i[ update destroy ]
+  before_action :set_note, only: %i[ update destroy send_email ]
   before_action :set_notes, only: %i[ index create ]
 
-  # GET /notes or /notes.json
+  # GET /notes
   def index
   end
 
-  # POST /notes or /notes.json
+  # POST /notes
   def create
     if @note.save
       redirect_to notes_path, notice: "Note was successfully created."
@@ -16,7 +16,7 @@ class NotesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /notes/1 or /notes/1.json
+  # PATCH/PUT /notes/1
   def update
     if @note.update(note_params)
       redirect_to notes_path, notice: "Note was successfully updated."
@@ -26,10 +26,17 @@ class NotesController < ApplicationController
     end
   end
 
-  # DELETE /notes/1 or /notes/1.json
+  # DELETE /notes/1
   def destroy
     @note.destroy
     redirect_to notes_url, notice: "Note was successfully destroyed."
+  end
+
+  # GET /notes/1/send
+  def send_email
+    to_email = params[:share][:to_email]
+    NoteMailer.with(note: @note, to_email: to_email, name: current_user.full_name).note_email.deliver_now
+    redirect_to notes_url, notice: "Note was sent to #{to_email}."
   end
 
   private

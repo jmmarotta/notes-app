@@ -45,6 +45,8 @@ group :development do
   # Generate better errors
   gem 'better_errors', '~> 2.9', '>= 2.9.1'
   gem 'binding_of_caller', '~> 1.0'
+  # For testing of emails in development
+  gem 'letter_opener', '~> 1.7'
 end
 
 group :test do
