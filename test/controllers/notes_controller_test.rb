@@ -2,6 +2,8 @@ require "test_helper"
 
 class NotesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:one)
+    @current_user = users(:one)
     @note = notes(:one)
   end
 
@@ -10,32 +12,17 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_note_url
-    assert_response :success
-  end
-
   test "should create note" do
     assert_difference('Note.count') do
-      post notes_url, params: { note: { body: @note.body, references: @note.references, title: @note.title } }
+      post notes_url, params: { note: { body: @note.body, user: @note.user, title: @note.title } }
     end
 
-    assert_redirected_to note_url(Note.last)
-  end
-
-  test "should show note" do
-    get note_url(@note)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_note_url(@note)
-    assert_response :success
+    assert_redirected_to notes_url
   end
 
   test "should update note" do
-    patch note_url(@note), params: { note: { body: @note.body, references: @note.references, title: @note.title } }
-    assert_redirected_to note_url(@note)
+    patch note_url(@note), params: { note: { body: @note.body, title: "updated" } }
+    assert_redirected_to notes_url
   end
 
   test "should destroy note" do

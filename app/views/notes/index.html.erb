@@ -11,13 +11,15 @@
     </div>
     <div class="offcanvas-body">
       <ul class="list-group">
-        <% @notes.each_with_index do |note, index| %>
-          <li class="list-group-item">
-            <a class="row text-dark text-decoration-none" href="<%= "#list-group#{index}" %>">
-              <div class="col-12 text-truncate"><%= note.title %></div>
-              <div class="col-12 text-truncate"><%= note.body %></div>
-            </a>
-          </li>
+        <% if @notes %>
+          <% @notes.each_with_index do |note, index| %>
+            <li class="list-group-item">
+              <a class="row text-dark text-decoration-none" href="<%= "#list-group#{index}" %>">
+                <div class="col-12 text-truncate"><%= note.title %></div>
+                <div class="col-12 text-truncate"><%= note.body %></div>
+              </a>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>
@@ -40,32 +42,34 @@
   </div>
 
   <ul class="list-group pb-5">
-    <% @notes.each_with_index do |note, index| %>
-      <li class="list-group-item" id="<%= "list-group#{index}" %>">
-        <div class="row pe-3">
-          <div class="col-12 text-end">
-            <a class="fas fa-edit p-1 make-editable text-decoration-none" role="button" data-bs-toggle="collapse" href="<%= "#collapseEdit#{index}" %>" aria-expanded="false" aria-controls="<%= "collapseEdit#{index}" %>" index="<%= "#{index}" %>"></a>
-            <%= link_to '', note, method: :delete, class: 'fas fa-trash p-1 text-decoration-none', data: { confirm: 'Warning: The note will be deleted?' } %>
+    <% if @notes %>
+      <% @notes.each_with_index do |note, index| %>
+        <li class="list-group-item" id="<%= "list-group#{index}" %>">
+          <div class="row pe-3">
+            <div class="col-12 text-end">
+              <a class="fas fa-edit p-1 make-editable text-decoration-none" role="button" data-bs-toggle="collapse" href="<%= "#collapseEdit#{index}" %>" aria-expanded="false" aria-controls="<%= "collapseEdit#{index}" %>" index="<%= "#{index}" %>"></a>
+              <%= link_to '', note, method: :delete, class: 'fas fa-trash p-1 text-decoration-none', data: { confirm: 'Warning: The note will be deleted?' } %>
+            </div>
           </div>
-        </div>
-        <div class="row mb-1">
-          <div class="col-12">
-              <div id="<%= "collapseEditHide#{index}" %>">
-                <div class="row">              
-                  <%= "#{note.title} (created by #{note.user.full_name}, #{note.get_created_time})" %><br />
+          <div class="row mb-1">
+            <div class="col-12">
+                <div id="<%= "collapseEditHide#{index}" %>">
+                  <div class="row">              
+                    <%= "#{note.title} (created by #{note.user.full_name}, #{note.get_created_time})" %><br />
+                  </div>
+                  <div class="row">
+                    <%= simple_format(note.body) %>
+                  </div>
                 </div>
-                <div class="row">
-                  <%= simple_format(note.body) %>
-                </div>
-              </div>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-12 collapse collapseEdit" id="<%= "collapseEdit#{index}" %>">
-            <%= render "form", note: note %>
+          <div class="row">
+            <div class="col-12 collapse collapseEdit" id="<%= "collapseEdit#{index}" %>">
+              <%= render "form", note: note %>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>
