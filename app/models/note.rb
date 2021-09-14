@@ -13,8 +13,8 @@ class Note < ApplicationRecord
   private
 
   def set_title
-    no_whitespace_title = self.title.clone.gsub(/\s+/, "")
-    if no_whitespace_title == ""
+    no_whitespace_title = self.title.clone.gsub(/\s+/, "") unless self.title == nil
+    if (self.title == nil || no_whitespace_title == "") && self.body != nil
       self.title = self.body[0...30]
     end
   end
