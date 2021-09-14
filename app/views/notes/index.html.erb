@@ -1,4 +1,4 @@
-<div class="container bg-light pt-3 mt-5 mb-5 rounded">
+<div class="container bg-post-it pt-3 mt-5 mb-5 rounded shadow">
   <div class="text-center">
     <a class="btn btn-light mb-2" data-bs-toggle="offcanvas" href="#offcanvasNotes" role="button" aria-controls="offcanvasNotes">
       <h1 class="display-4"><i class="fa fa-bars" aria-hidden="true"></i> My Notes</h1>
@@ -30,7 +30,7 @@
       </button>
     </div>
     <div class="col-6 text-end">
-      <%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-secondary p-1 mb-1' %>
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-secondary p-1 mb-1' %>
     </div>
   </div>
   <div class="row">
@@ -52,7 +52,7 @@
           <div class="col-12">
               <div id="<%= "collapseEditHide#{index}" %>">
                 <div class="row">              
-                  <%= "#{note.title} (created by #{note.user.email}, #{note.created_at.day})" %><br />
+                  <%= "#{note.title} (created by #{note.user.full_name}, #{note.get_created_time})" %><br />
                 </div>
                 <div class="row">
                   <%= simple_format(note.body) %>

@@ -6,13 +6,16 @@ class Note < ApplicationRecord
 
   before_validation :set_title
 
+  def get_created_time
+    (created_at + Time.zone_offset('EST')).strftime("%a %R")
+  end
+
   private
 
   def set_title
     no_whitespace_title = self.title.clone.gsub(/\s+/, "")
     if no_whitespace_title == ""
       self.title = self.body[0...30]
-      p self.title
     end
   end
 end
