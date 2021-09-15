@@ -35,7 +35,6 @@ class NotesController < ApplicationController
   # GET /notes/1/send
   def send_email
     to_email = params[:share][:to_email]
-    p current_user
     NoteMailer.with(note: @note, to_email: to_email, name: current_user.full_name).note_email.deliver_now
     redirect_to notes_url, notice: "Note was sent to #{to_email}."
   end
