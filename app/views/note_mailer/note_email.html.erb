@@ -4,9 +4,18 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
+    <p>A note was sent from ruby-notes.herokuapp.com</p><br />
     <h1><%= @note.title %></h1>
     <p>
-      <%= @note.body %>
+      <%= simple_format(@note.body) %>
+    </p><br />
+
+    <p>
+      Provided by:<br />
+      Ruby Notes<br />
+      620 NW 35 Terrace<br />
+      Gainesville, FL<br />
+      32607
     </p>
   </body>
 </html>
