@@ -10,7 +10,10 @@ class Note < ApplicationRecord
   
   # Calculate the created at string for use in view
   def get_created_time
-    (created_at + Time.zone_offset(Time.now.zone)).strftime("%a %R")
+    # We can't use this because heroku recognizes UTC as time zone
+    # (created_at + Time.zone_offset(Time.now.zone)).strftime("%a %R")
+    # Would prefer to get user's location with javascript, but this will do for now
+    (created_at + Time.zone_offset("EDT")).strftime("%a %R")
   end
 
   private
