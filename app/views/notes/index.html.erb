@@ -46,7 +46,12 @@
       <% @notes.each_with_index do |note, index| %>
         <li class="list-group-item" id="<%= "list-group#{index}" %>">
           <div class="row pe-3">
-            <div class="col-12 text-end">
+            <div class="col-8">
+              <div id="<%= "collapseEditTitle#{index}" %>">
+                <%= "#{note.title} (created by #{note.user.full_name}, #{note.get_created_time})" %>
+              </div>
+            </div>
+            <div class="col-4 text-end">
               <a class="fas fa-edit p-1 make-editable text-decoration-none" role="button" data-bs-toggle="collapse" href="<%= "#collapseEdit#{index}" %>" aria-expanded="false" aria-controls="<%= "collapseEdit#{index}" %>" index="<%= "#{index}" %>"></a>
               <%= link_to '', note, method: :delete, class: 'fas fa-trash p-1 text-decoration-none', data: { confirm: 'Warning: The note will be deleted?' } %>
               <a role="button" class="" data-bs-toggle="modal" data-bs-target="#modalSend">
@@ -81,16 +86,9 @@
             </div>
           </div>
 
-          <div class="row mb-1">
+          <div class="row mb-1" id="<%= "collapseEditBody#{index}" %>" >
             <div class="col-12">
-                <div id="<%= "collapseEditHide#{index}" %>">
-                  <div class="row">              
-                    <%= "#{note.title} (created by #{note.user.full_name}, #{note.get_created_time})" %><br />
-                  </div>
-                  <div class="row">
-                    <%= simple_format(note.body) %>
-                  </div>
-                </div>
+              <%= simple_format(note.body) %>
             </div>
           </div>
           <div class="row">
