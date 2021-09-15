@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
+  before_action :set_notes, only: %i[ index create update ]
   before_action :set_note, only: %i[ update destroy send_email ]
-  before_action :set_notes, only: %i[ index create ]
 
   # GET /notes
   def index
@@ -8,7 +8,7 @@ class NotesController < ApplicationController
 
   # POST /notes
   def create
-    if @note.save
+    if @new_note.save
       redirect_to notes_path, notice: "Note was successfully created."
     else
       flash.now[:alert] = "Note could not be created."
@@ -21,7 +21,7 @@ class NotesController < ApplicationController
     if @note.update(note_params)
       redirect_to notes_path, notice: "Note was successfully updated."
     else
-      flash.now[:alert] = "Note could not be updated."
+      flash.now[:alert] = "Note could not be updated. #{@note.errors.full_messages.to_sentence}."
       render :index, status: :unprocessable_entity
     end
   end
@@ -55,9 +55,10 @@ class NotesController < ApplicationController
       params.require(:note).permit(:title, :body)
     end
 
+    # set notes for rendering index
     def set_notes
       user_notes = current_user.notes
       @notes = user_notes.where.not(id: nil)
-      @note = action_name != 'create' ? user_notes.build : user_notes.build(note_params)
+      @new_note = action_name != 'create' ? user_notes.build : user_notes.build(note_params)
     end
 end
