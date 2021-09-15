@@ -1,6 +1,4 @@
 class NoteMailer < ApplicationMailer
-  default from: 'notes-no-reply@ruby-notes.heroku.com'
-
   def note_email
     name = params[:name]
     @email = params[:to_email]
